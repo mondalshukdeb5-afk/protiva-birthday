@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Protiva 🎂</title>
+
+  <style>
+    :root{
+      --bg1:#ffe8f1;
+      --bg2:#e9f6ff;
+      --card:#ffffffcc;
+      --text:#2b2b2b;
+      --pink:#ff6fae;
+      --purple:#9b7bff;
+      --blue:#66bfff;
+      --shadow: 0 18px 40px rgba(0,0,0,.12);
+      --radius: 24px;
+    }
+
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: "Segoe UI", system-ui, Arial, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+      background: radial-gradient(circle at top left, var(--bg1), transparent 50%),
+                  radial-gradient(circle at bottom right, var(--bg2), transparent 50%),
+                  linear-gradient(120deg, #fff 0%, #fdf7ff 100%);
+    }
+
+    .container{
+      width:min(1100px, 92%);
+      margin: 24px auto 80px;
+    }
+
+    .hero{
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+      position: relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-60px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,111,174,.25), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(102,191,255,.22), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(155,123,255,.18), transparent 45%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:center;
+    }
+
+    @media (max-width: 900px){
+      .hero-inner{grid-template-columns:1fr;}
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(28px, 4vw, 52px);
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+
+    .subtitle{
+      margin:10px 0 16px;
+      font-size: clamp(15px, 2vw, 18px);
+      opacity:.85;
+    }
+
+    .badge-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin: 12px 0 18px;
+    }
+
+    .badge{
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 8px 20px rgba(0,0,0,.06);
+      font-weight:600;
+      font-size: 14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+    }
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top: 14px;
+    }
+
+    button{
+      border: none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight:700;
+      font-size: 15px;
+      box-shadow: 0 16px 30px rgba(0,0,0,.12);
+      transition: transform .12s ease, filter .12s ease;
+    }
+
+    button:active{transform: scale(.98);}
+
+    .btn-confetti{
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      color:white;
+    }
+
+    .btn-music{
+      background: linear-gradient(90deg, var(--blue), #7ef2c8);
+      color:#062018;
+    }
+
+    .right-card{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
+      position:relative;
+    }
+
+    .countdown-title{
+      margin:0 0 10px;
+      font-size: 16px;
+      font-weight:800;
+      opacity:.9;
+    }
+
+    .countdown{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+
+    .time-box{
+      background:#fff;
+      border-radius: 18px;
+      padding: 12px 10px;
+      text-align:center;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+
+    .time-box .num{
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .time-box .lbl{
+      font-size: 12px;
+      opacity:.7;
+      margin-top:4px;
+    }
+
+    .section{
+      margin-top: 22px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .section h2{
+      margin:0 0 14px;
+      font-size: 22px;
+    }
+
+    /* Balloons */
+    .balloons{
+      position: fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 1;
+    }
+
+    .balloon{
+      position:absolute;
+      bottom:-120px;
+      width: 70px;
+      height: 90px;
+      border-radius: 50% 50% 45% 45%;
+      opacity:.75;
+      filter: drop-shadow(0 18px 12px rgba(0,0,0,.12));
+      animation: floatUp linear infinite;
+    }
+
+    .balloon::after{
+      content:"";
+      position:absolute;
+      width: 2px;
+      height: 85px;
+      background: rgba(0,0,0,.15);
+      left: 50%;
+      top: 86px;
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatUp{
+      from { transform: translateY(0) translateX(0) rotate(-2deg); }
+      to   { transform: translateY(-120vh) translateX(40px) rotate(3deg); }
+    }
+
+    /* Cake */
+    .cake-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items:center;
+    }
+
+    @media(max-width: 900px){
+      .cake-wrap{grid-template-columns:1fr;}
+    }
+
+    .cake-card{
+      background:#fff;
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
+    }
+
+    .cake{
+      width: min(420px, 100%);
+      margin: 0 auto;
+      position:relative;
+      padding-top: 20px;
+    }
+
+    .layer{
+      height: 95px;
+      border-radius: 26px;
+      margin: 0 auto;
+      position:relative;
+      box-shadow: inset 0 -14px 0 rgba(0,0,0,.05);
+    }
+
+    .layer.top{
+      width: 75%;
+      background: linear-gradient(180deg, #fff, #ffe3f1);
+    }
+    .layer.mid{
+      width: 90%;
+      background: linear-gradient(180deg, #fff, #e7f6ff);
+      margin-top:-18px;
+    }
+    .layer.bot{
+      width: 100%;
+      background: linear-gradient(180deg, #fff, #f5e9ff);
+      margin-top:-18px;
+    }
+
+    .drip{
+      position:absolute;
+      left: 10%;
+      right: 10%;
+      top: 16px;
+      height: 20px;
+      background: rgba(255,111,174,.25);
+      border-radius: 999px;
+    }
+
+    .candles{
+      position:absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display:flex;
+      gap: 12px;
+    }
+
+    .candle{
+      width: 16px;
+      height: 55px;
+      background: repeating-linear-gradient(
+        45deg,
+        #fff 0 6px,
+        rgba(155,123,255,.35) 6px 12px
+      );
+      border-radius: 8px;
+      position:relative;
+      cursor:pointer;
+      box-shadow: 0 10px 16px rgba(0,0,0,.12);
+      user-select:none;
+    }
+
+    .flame{
+      position:absolute;
+      width: 16px;
+      height: 22px;
+      left: 50%;
+      top: -22px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at 30% 30%, #fff6a5, #ff9f43, #ff4d6d);
+      border-radius: 50% 50% 50% 50%;
+      filter: blur(.2px);
+      animation: flicker .12s infinite alternate;
+      box-shadow: 0 0 22px rgba(255, 128, 80, .65);
+    }
+
+    @keyframes flicker{
+      from{ transform: translateX(-50%) rotate(-3deg) scale(1); }
+      to{ transform: translateX(-50%) rotate(3deg) scale(1.03); }
+    }
+
+    .flame.off{
+      opacity:0;
+      animation:none;
+      box-shadow:none;
+    }
+
+    .cake-note{
+      margin-top: 14px;
+      font-size: 14px;
+      opacity:.75;
+      text-align:center;
+    }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media(max-width: 900px){
+      .gallery{grid-template-columns: repeat(2, 1fr);}
+    }
+
+    .photo{
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      overflow:hidden;
+      background:#fff;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 14px 26px rgba(0,0,0,.10);
+      cursor:pointer;
+      transition: transform .12s ease;
+      position:relative;
+    }
+
+    .photo:hover{ transform: translateY(-3px); }
+
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.65);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+    }
+
+    .lightbox.open{display:flex;}
+    .lightbox img{
+      width: min(900px, 95vw);
+      max-height: 85vh;
+      object-fit:contain;
+      border-radius: 18px;
+      box-shadow: 0 30px 70px rgba(0,0,0,.35);
+      background:#fff;
+    }
+
+    .close{
+      position:absolute;
+      top: 18px;
+      right: 18px;
+      background:#fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+
+    /* Confetti */
+    .confetti{
+      position: fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 999;
+    }
+
+    .conf{
+      position:absolute;
+      width: 10px;
+      height: 16px;
+      border-radius: 4px;
+      opacity:.95;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall{
+      0%{
+        transform: translateY(-20px) rotate(0deg);
+      }
+      100%{
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+
+    /* Footer message */
+    .love{
+      text-align:center;
+      margin-top: 14px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .mini{
+      text-align:center;
+      opacity:.7;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Balloons -->
+  <div class="balloons" id="balloons"></div>
+
+  <!-- Confetti -->
+  <div class="confetti" id="confetti"></div>
+
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-inner">
+
+        <div>
+          <h1>Happy 18th Birthday<br>Protiva Mondal 🎂💖</h1>
+          <div class="subtitle">
+            A cute little birthday page made with love, balloons, and chaos ✨🎈
+          </div>
+
+          <div class="badge-row">
+            <div class="badge">🎈 Soft Aesthetic Theme</div>
+            <div class="badge">🎉 Confetti Blast</div>
+            <div class="badge">🕯️ Blow the Candles</div>
+            <div class="badge">🖼️ Photo Gallery</div>
+            <div class="badge">⏳ Countdown</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-confetti" onclick="blastConfetti(180)">
+              🎉 Confetti Explosion
+            </button>
+
+            <button class="btn-music" onclick="toggleMusic()">
+              🎵 Music: <span id="musicState">OFF</span>
+            </button>
+          </div>
+
+          <div class="mini">
+            Tip: click the candle flames to blow them out 😤💨
+          </div>
+        </div>
+
+        <div class="right-card">
+          <div class="countdown-title">⏳ Countdown to the Big Day</div>
+          <div class="countdown">
+            <div class="time-box">
+              <div class="num" id="d">00</div>
+              <div class="lbl">Days</div>
+            </div>
+            <div class="time-box">
+              <div class="num" id="h">00</div>
+              <div class="lbl">Hours</div>
+            </div>
+            <div class="time-box">
+              <div class="num" id="m">00</div>
+              <div class="lbl">Minutes</div>
+            </div>
+            <div class="time-box">
+              <div class="num" id="s">00</div>
+              <div class="lbl">Seconds</div>
+            </div>
+          </div>
+
+          <div class="love">💖 Protiva turns 18 💖</div>
+          <div class="mini">Make a wish… and don’t tell anyone 😌✨</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🎂 The Cake (Click Flames to Blow Out)</h2>
+
+      <div class="cake-wrap">
+
+        <div class="cake-card">
+          <div class="cake">
+            <div class="candles" id="candles"></div>
+
+            <div class="layer top">
+              <div class="drip"></div>
+            </div>
+            <div class="layer mid"></div>
+            <div class="layer bot"></div>
+
+            <div class="cake-note">
+              Click all flames → surprise confetti 😈🎉
+            </div>
+          </div>
+        </div>
+
+        <div class="cake-card">
+          <h2 style="margin-top:0;">💌 Birthday Message</h2>
+          <p style="margin:0; line-height:1.6; font-size:15px; opacity:.9;">
+            Dear <b>Protiva</b>,<br><br>
+            Happy 18th Birthday! 🎂✨  
+            May your life be full of cute moments, beautiful memories,
+            and dreams that come true.<br><br>
+            Keep smiling always 💖🎈
+          </p>
+
+          <div class="mini" style="text-align:left; margin-top:14px;">
+            (Made by Rift 😤🔥)
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🖼️ Photo Gallery</h2>
+      <div class="mini" style="text-align:left; margin-top:-6px; margin-bottom:14px;">
+        ...........................
+      </div>
+
+      <div class="gallery" id="gallery">
+        <!-- Replace these with your own photos -->
+        <div class="photo"><img src="images/p1.jpg" alt="photo 1"></div>
+        <div class="photo"><img src="images/p2.jpg" alt="photo 2"></div>
+        <div class="photo"><img src="images/p3.jpg" alt="photo 3"></div>
+        <div class="photo"><img src="images/p4.jpg" alt="photo 4"></div>
+        <div class="photo"><img src="images/p5.jpg" alt="photo 5"></div>
+        <div class="photo"><img src="images/p6.jpg" alt="photo 6"></div>
+        <div class="photo"><img src="images/p7.jpg" alt="photo 7"></div>
+        <div class="photo"><img src="images/p8.jpg" alt="photo 8"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="close" onclick="closeLightbox()">✖ Close</div>
+    <img id="lightboxImg" src="" alt="big photo">
+  </div>
+
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <!-- Put your music file in the same folder and rename it to music.mp3 -->
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // =========================
+    // 1) BALLOONS GENERATOR
+    // =========================
+    const balloons = document.getElementById("balloons");
+
+    function spawnBalloons(){
+      const colors = [
+        "rgba(255,111,174,.85)",
+        "rgba(155,123,255,.75)",
+        "rgba(102,191,255,.75)",
+        "rgba(255,205,120,.75)",
+        "rgba(126,242,200,.70)"
+      ];
+
+      for(let i=0; i<14; i++){
+        const b = document.createElement("div");
+        b.className = "balloon";
+
+        const size = 52 + Math.random()*40;
+        b.style.width = size + "px";
+        b.style.height = (size*1.25) + "px";
+        b.style.left = (Math.random()*100) + "vw";
+        b.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+        const dur = 10 + Math.random()*12;
+        b.style.animationDuration = dur + "s";
+        b.style.animationDelay = (Math.random()*4) + "s";
+
+        balloons.appendChild(b);
+      }
+    }
+    spawnBalloons();
+
+    // =========================
+    // 2) CONFETTI EXPLOSION
+    // =========================
+    const confetti = document.getElementById("confetti");
+
+    function blastConfetti(amount=120){
+      const colors = [
+        "#ff6fae", "#9b7bff", "#66bfff", "#7ef2c8", "#ffd36e", "#ffffff"
+      ];
+
+      for(let i=0; i<amount; i++){
+        const c = document.createElement("div");
+        c.className = "conf";
+
+        c.style.left = (Math.random()*100) + "vw";
+        c.style.top = (-20 - Math.random()*80) + "px";
+
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+        const dur = 2.6 + Math.random()*2.8;
+        c.style.animationDuration = dur + "s";
+
+        c.style.transform = `rotate(${Math.random()*360}deg)`;
+
+        confetti.appendChild(c);
+
+        setTimeout(()=> c.remove(), dur*1000 + 200);
+      }
+    }
+
+    // Auto confetti on load
+    setTimeout(()=> blastConfetti(160), 650);
+
+    // =========================
+    // 3) MUSIC TOGGLE
+    // =========================
+    const bgMusic = document.getElementById("bgMusic");
+    const musicState = document.getElementById("musicState");
+    let musicOn = false;
+
+    function toggleMusic(){
+      if(!musicOn){
+        bgMusic.play().catch(()=> {
+          alert("Browser blocked autoplay. Click again to start music 🎵");
+        });
+        musicOn = true;
+        musicState.textContent = "ON";
+      } else {
+        bgMusic.pause();
+        musicOn = false;
+        musicState.textContent = "OFF";
+      }
+    }
+
+    // =========================
+    // 4) COUNTDOWN TIMER
+    // =========================
+    // Set her birthday date here:
+    // Example: 2026-02-20 00:00:00
+    // (Change this to the REAL birthday date!)
+    const targetDate = new Date("2026-12-20T00:00:00").getTime();
+
+    function updateCountdown(){
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if(diff <= 0){
+        document.getElementById("d").textContent = "00";
+        document.getElementById("h").textContent = "00";
+        document.getElementById("m").textContent = "00";
+        document.getElementById("s").textContent = "00";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const secs = Math.floor((diff % (1000*60)) / 1000);
+
+      document.getElementById("d").textContent = String(days).padStart(2,"0");
+      document.getElementById("h").textContent = String(hours).padStart(2,"0");
+      document.getElementById("m").textContent = String(mins).padStart(2,"0");
+      document.getElementById("s").textContent = String(secs).padStart(2,"0");
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // =========================
+    // 5) CAKE CANDLES (CLICK TO BLOW)
+    // =========================
+    const candlesWrap = document.getElementById("candles");
+    let totalCandles = 7;
+    let blownOut = 0;
+
+    function createCandles(){
+      candlesWrap.innerHTML = "";
+      blownOut = 0;
+
+      for(let i=0; i<totalCandles; i++){
+        const candle = document.createElement("div");
+        candle.className = "candle";
+
+        const flame = document.createElement("div");
+        flame.className = "flame";
+
+        candle.appendChild(flame);
+
+        candle.addEventListener("click", ()=>{
+          if(!flame.classList.contains("off")){
+            flame.classList.add("off");
+            blownOut++;
+
+            // tiny confetti per candle
+            blastConfetti(18);
+
+            if(blownOut === totalCandles){
+              setTimeout(()=>{
+                blastConfetti(260);
+                alert("🎉 ALL CANDLES BLOWN OUT! WISH GRANTED 😤✨");
+              }, 250);
+            }
+          }
+        });
+
+        candlesWrap.appendChild(candle);
+      }
+    }
+    createCandles();
+
+    // =========================
+    // 6) GALLERY LIGHTBOX
+    // =========================
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+
+    gallery.querySelectorAll(".photo img").forEach(img=>{
+      img.addEventListener("click", ()=>{
+        lightboxImg.src = img.src;
+        lightbox.classList.add("open");
+      });
+    });
+
+    function closeLightbox(){
+      lightbox.classList.remove("open");
+    }
+
+    lightbox.addEventListener("click", (e)=>{
+      if(e.target === lightbox) closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
